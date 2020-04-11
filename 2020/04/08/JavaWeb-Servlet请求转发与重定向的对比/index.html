@@ -20,20 +20,23 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="不久前也报了一个java的培训班，正式尝试踏入程序猿的行业。写博客是一件有对学习有所益处外带还有点B格的事情，何乐而不为？初学没什么技术可写，仅当作学习记录、总结、信息汇总罢了。愿君如长松，慎勿作桃李！Hello world！ 12345public class HelloWorld &amp;#123;    public static void main(String[] args) &amp;#123;">
+  <meta name="description" content="以Tomcat服务器上的Mysql数据库单表信息的简单CRUD应用为例，简述请求转发和重定向的区别。  转发：request.getRequestDispatcher(path).forward(request, response) 重定向：response.sendRedirect(location)  工作流程转发处理流程——一次请求，一次响应  浏览器请求Servlet Servletc处理">
 <meta property="og:type" content="article">
-<meta property="og:title" content="永言配命，自求多福">
-<meta property="og:url" content="http://yoursite.com/2020/03/14/%E6%B0%B8%E8%A8%80%E9%85%8D%E5%91%BD%EF%BC%8C%E8%87%AA%E6%B1%82%E5%A4%9A%E7%A6%8F/index.html">
+<meta property="og:title" content="JavaWeb: Servlet请求转发和重定向的对比">
+<meta property="og:url" content="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/index.html">
 <meta property="og:site_name" content="很鱼的鱼">
-<meta property="og:description" content="不久前也报了一个java的培训班，正式尝试踏入程序猿的行业。写博客是一件有对学习有所益处外带还有点B格的事情，何乐而不为？初学没什么技术可写，仅当作学习记录、总结、信息汇总罢了。愿君如长松，慎勿作桃李！Hello world！ 12345public class HelloWorld &amp;#123;    public static void main(String[] args) &amp;#123;">
+<meta property="og:description" content="以Tomcat服务器上的Mysql数据库单表信息的简单CRUD应用为例，简述请求转发和重定向的区别。  转发：request.getRequestDispatcher(path).forward(request, response) 重定向：response.sendRedirect(location)  工作流程转发处理流程——一次请求，一次响应  浏览器请求Servlet Servletc处理">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-03-14T15:21:29.000Z">
-<meta property="article:modified_time" content="2020-04-08T07:29:41.062Z">
+<meta property="og:image" content="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/dispatch.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/redirect.png">
+<meta property="article:published_time" content="2020-04-08T07:48:27.000Z">
+<meta property="article:modified_time" content="2020-04-11T15:09:26.272Z">
 <meta property="article:author" content="梅改">
-<meta property="article:tag" content="生活">
+<meta property="article:tag" content="javaweb">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/dispatch.png">
 
-<link rel="canonical" href="http://yoursite.com/2020/03/14/%E6%B0%B8%E8%A8%80%E9%85%8D%E5%91%BD%EF%BC%8C%E8%87%AA%E6%B1%82%E5%A4%9A%E7%A6%8F/">
+<link rel="canonical" href="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/">
 
 
 <script id="page-configurations">
@@ -45,7 +48,7 @@
   };
 </script>
 
-  <title>永言配命，自求多福 | 很鱼的鱼</title>
+  <title>JavaWeb: Servlet请求转发和重定向的对比 | 很鱼的鱼</title>
   
 
 
@@ -160,7 +163,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/14/%E6%B0%B8%E8%A8%80%E9%85%8D%E5%91%BD%EF%BC%8C%E8%87%AA%E6%B1%82%E5%A4%9A%E7%A6%8F/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar_wolf.gif">
@@ -173,7 +176,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          永言配命，自求多福
+          JavaWeb: Servlet请求转发和重定向的对比
         </h1>
 
         <div class="post-meta">
@@ -183,24 +186,15 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-03-14 23:21:29" itemprop="dateCreated datePublished" datetime="2020-03-14T23:21:29+08:00">2020-03-14</time>
+              <time title="创建时间：2020-04-08 15:48:27" itemprop="dateCreated datePublished" datetime="2020-04-08T15:48:27+08:00">2020-04-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-04-08 15:29:41" itemprop="dateModified" datetime="2020-04-08T15:29:41+08:00">2020-04-08</time>
+                <time title="修改时间：2020-04-11 23:09:26" itemprop="dateModified" datetime="2020-04-11T23:09:26+08:00">2020-04-11</time>
               </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%94%9F%E6%B4%BB/" itemprop="url" rel="index"><span itemprop="name">生活</span></a>
-                </span>
-            </span>
 
           
 
@@ -213,11 +207,68 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>不久前也报了一个java的培训班，正式尝试踏入程序猿的行业。写博客是一件有对学习有所益处外带还有点B格的事情，何乐而不为？初学没什么技术可写，仅当作学习记录、总结、信息汇总罢了。愿君如长松，慎勿作桃李！Hello world！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Hello world!"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>以Tomcat服务器上的Mysql数据库单表信息的简单CRUD应用为例，简述请求转发和重定向的区别。</p>
+<ul>
+<li>转发：<code>request.getRequestDispatcher(path).forward(request, response)</code></li>
+<li>重定向：<code>response.sendRedirect(location)</code></li>
+</ul>
+<h3 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h3><p><strong>转发处理流程——<font color=red>一次请求，一次响应</font></strong></p>
+<ol>
+<li>浏览器请求Servlet</li>
+<li>Servletc处理业务逻辑。</li>
+<li>Servlet将请求转发给JSP</li>
+<li>JSP向浏览器提交Response<img src="/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/dispatch.png" class="" title="请求转发工作流程">
 
-<p><strong>永言陪命，自求多福</strong></p>
+</li>
+</ol>
+<p><strong>转发处理流程——<font color=red>两次请求，两次响应</font></strong></p>
+<a id="more"></a>
 
+<ol>
+<li>浏览器请求Servlet</li>
+<li>Servlet处理业务逻辑</li>
+<li>Servlet携带JSP的url，提交Response给浏览器。</li>
+<li>浏览器请求JSP </li>
+<li>JSP提交响应给浏览器。<img src="/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/redirect.png" class="" title="请求重定向工作流程">
+
+</li>
+</ol>
+<h3 id="路径和权限"><a href="#路径和权限" class="headerlink" title="路径和权限"></a>路径和权限</h3><p>假定当前请求的绝对url为：<code>http://localhost:8080/content-path/wrappers/current?param=xxx</code>；当前请求的servlet设置的简单url为：<code>/wrapper/current</code>；当前项目的上下文路径(context-path): <code>/content-path</code>。</p>
+<p><strong>转发只能访问项目内部的所有资源（当前context path内）：</strong></p>
+<ul>
+<li>不使用”/“，相对当前请求的uri</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request.getRequestDispatcher(<span class="string">"taget"</span>).forward(request, response);</span><br><span class="line"><span class="comment">// 访问: /content-path/wrappers/target</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用”/“，代表项目的根context path</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">request.getRequestDispatcher(<span class="string">"/taget"</span>).forward(request, response);</span><br><span class="line">  <span class="comment">// 访问: /content-path/target</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>重定向重新发起请求，可以访问使用浏览器地址栏能够访问的一切资源，可以使用相对路径和绝对路径，使用相对路径时，servlet容器会先将相对路径转换为绝对路径：</strong></p>
+<ul>
+<li>不使用”/“，转换时相对当前请求（servlet）的路径</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.sendRedirect(<span class="string">"target"</span>);</span><br><span class="line"><span class="comment">// 转换成的绝对路径为：http://localhost:8080/content-path/wrappers/target</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用”/“开始，转换时相对servlet容器的根目录</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">response.sendRedirect(<span class="string">"/target"</span>);</span><br><span class="line"><span class="comment">// 转换成的绝对路径为：http://localhost:8080/target</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用”//“开始，被解释为网络路径（外域）（不是很清楚）</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> response.sendRedirect(<span class="string">"//baidu.com"</span>);</span><br><span class="line">response.sendRedirect(<span class="string">"http://www.baidu.com"</span>);	<span class="comment">// 绝对路径访问外域</span></span><br><span class="line"> <span class="comment">// 以上两种方式都可以访问百度</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据共享"><a href="#数据共享" class="headerlink" title="数据共享"></a>数据共享</h3><p>转发发生于服务器内部转发，整个过程处于同一个请求当中，可以通过request作用域共享数据。<br>重定向则是完全的跳转，客户端会向服务器端发送两个请求，数据无法通过request共享。</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ul>
+<li><p>地址栏的区别，显示最后一次请求的url</p>
+</li>
+<li><p>效率，转发优于重定向（B/S间一次交互与两次交互）</p>
+</li>
+</ul>
+<h3 id="未完待续…"><a href="#未完待续…" class="headerlink" title="未完待续…"></a>未完待续…</h3>
     </div>
 
     
@@ -226,7 +277,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%94%9F%E6%B4%BB/" rel="tag"># 生活</a>
+              <a href="/tags/javaweb/" rel="tag"># javaweb</a>
           </div>
 
         
@@ -234,10 +285,13 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/04/08/JavaWeb-Servlet%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91%E4%B8%8E%E9%87%8D%E5%AE%9A%E5%90%91%E7%9A%84%E5%AF%B9%E6%AF%94/" rel="next" title="JavaWeb: Servlet请求转发和重定向的对比">
-      JavaWeb: Servlet请求转发和重定向的对比 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/03/14/%E6%B0%B8%E8%A8%80%E9%85%8D%E5%91%BD%EF%BC%8C%E8%87%AA%E6%B1%82%E5%A4%9A%E7%A6%8F/" rel="prev" title="永言配命，自求多福">
+      <i class="fa fa-chevron-left"></i> 永言配命，自求多福
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/08/JavaWeb-Servlet%E6%A6%82%E8%BF%B0/" rel="next" title="JavaWeb: Servlet概述">
+      JavaWeb: Servlet概述 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -298,6 +352,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作流程"><span class="nav-number">1.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路径和权限"><span class="nav-number">2.</span> <span class="nav-text">路径和权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据共享"><span class="nav-number">3.</span> <span class="nav-text">数据共享</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">4.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未完待续…"><span class="nav-number">5.</span> <span class="nav-text">未完待续…</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
